@@ -6,7 +6,7 @@ The DevTest project is a Django-based web application designed for uploading Exc
 - File Upload: A user-friendly web interface for uploading Excel/CSV files.
 - Data Processing: Reads and summarizes the contents of the uploaded file.
 - Email Functionality: Sends the summary report as an email body to a specified email address.
-- Deployment: The project is deployed on Heroku for public access.
+- Deployment: The project is deployed on PythonAnywhere for public access.
 ### Technologies Used
 - Django: For the web application framework
 - Pandas: For reading and summarizing the uploaded file
@@ -29,5 +29,5 @@ The DevTest project is a Django-based web application designed for uploading Exc
 Repository Link
 - GitHub Repository: https://github.com/Pavantext/DevTest
 - Configuration
-For email functionality, ensure that EMAIL_HOST_USER and EMAIL_HOST_PASSWORD are configured correctly in Heroku’s environment variables.
+For email functionality, ensure that EMAIL_HOST_USER and EMAIL_HOST_PASSWORD are configured correctly in PythonAnywhere’s environment variables.
 
