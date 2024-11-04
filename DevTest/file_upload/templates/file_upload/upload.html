@@ -5,50 +5,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        table {
-            width: 50%;
-            border-collapse: collapse;
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
         }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
+        .container {
+            margin-top: 50px;
+            max-width: 700px;
+        }
+        .card {
+            border: 1px solid #dee2e6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-inline: 19vh;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
             text-align: center;
         }
-        th {
+        .btn-primary {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table th {
             background-color: yellow;
+            color: black;
+        }
+        .alert {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h2>Upload an Excel or CSV file</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form>
+    <div class="container">
+        <!-- Upload Card -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Upload Excel/CSV File</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="file">Select a file:</label>
+                        {{ form.file }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                
+                {% if summary %}
+                    <div class="summary mt-4">
+                        <h5>Summary Report:</h5>
+                        {% if "Error processing file" in summary %}
+                            <div class="alert alert-danger">
+                                {{ summary }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success">
+                                File processed successfully!
+                            </div>
+                            <div class="table-responsive">
+                                {{ summary|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
 
-    {% if table_data %}
-        <h3>Uploaded Data:</h3>
-        <table>
-            <tr>
-                <th>Cust State</th>
-                <th>Cust Pin</th>
-                <th>DPD</th>
-            </tr>
-            {% for row in table_data %}
-            <tr>
-                <td>{{ row.Cust_State }}</td>
-                <td>{{ row.Cust_Pin }}</td>
-                <td>{{ row.DPD }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
+        <!-- Display the Data Table -->
+        {% if table_data %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5>Data Preview</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cust State</th>
+                                <th>Cust Pin</th>
+                                <th>DPD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in table_data %}
+                                <tr>
+                                    <td>{{ row.Cust_State }}</td>
+                                    <td>{{ row.Cust_Pin }}</td>
+                                    <td>{{ row.DPD }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        {% endif %}
+    </div>
 
-    {% if summary %}
-        <h3>Summary Report:</h3>
-        <pre>{{ summary }}</pre>
-    {% endif %}
+    <!-- Bootstrap JS, Popper.js, and jQuery for interactive components -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

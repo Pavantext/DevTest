@@ -6,6 +6,8 @@ from .forms import UploadFileForm
 from django.conf import settings
 from django.utils.html import strip_tags
 
+
+
 def upload_file(request):
     summary = None
     table_data = None  # This will hold data for the table
@@ -51,10 +53,13 @@ def upload_file(request):
                 email.content_subtype = "html"  # This is necessary to send HTML email
                 email.send(fail_silently=False)
 
+                
+
             except Exception as e:
                 summary = f"Error processing file: {e}"
 
     else:
         form = UploadFileForm()
+        
 
     return render(request, 'file_upload/upload.html', {'form': form, 'summary': summary, 'table_data': table_data})
