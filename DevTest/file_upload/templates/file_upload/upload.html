@@ -1,0 +1,54 @@
+<!-- file_upload/templates/file_upload/upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h2>Upload an Excel or CSV file</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if table_data %}
+        <h3>Uploaded Data:</h3>
+        <table>
+            <tr>
+                <th>Cust State</th>
+                <th>Cust Pin</th>
+                <th>DPD</th>
+            </tr>
+            {% for row in table_data %}
+            <tr>
+                <td>{{ row.Cust_State }}</td>
+                <td>{{ row.Cust_Pin }}</td>
+                <td>{{ row.DPD }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if summary %}
+        <h3>Summary Report:</h3>
+        <pre>{{ summary }}</pre>
+    {% endif %}
+</body>
+</html>
